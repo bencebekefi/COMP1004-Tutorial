@@ -4,7 +4,7 @@ $(document).ready(function() {
     function loadMainContent() {
         $(".container").html(`
         <div>
-        <h2>{Password Manager}</h2>
+        <h2>"Password Manager"</h2>
         <button id="addRowBtn">Add Row</button>
         <table border="1" id="mainTable">
             <thead>
@@ -18,23 +18,48 @@ $(document).ready(function() {
                 <!-- Rows will be added dynamically here -->
             </tbody>
         </table>
+        <button id="logoutBtn">Log Out</button>
     </div>
 
         `);
     $("#addRowBtn").on("click", addRowToTable);
+
+    $("#logoutBtn").on("click", logout);
     }
+    
     function addRowToTable() {
         // Get the table body
         const tableBody = $("#mainTable tbody");
 
         // Create a new row with three cells
         const newRow = $("<tr>");
-        newRow.append("<td>New Data 1</td>");
-        newRow.append("<td>New Data 2</td>");
-        newRow.append("<td>New Data 3</td>");
+
+        // Add input fields to each cell
+        newRow.append(`<td><input type="text" class="usernameInput" placeholder="Enter Username"></td>`);
+        newRow.append(`<td><input type="password" class="passwordInput" placeholder="Enter Password"></td>`);
+        newRow.append(`<td><input type="text" class="websiteInput" placeholder="Enter Website"></td>`);
 
         // Append the new row to the table body
         tableBody.append(newRow);
+
+        // and update the row content dynamically
+        $(".usernameInput, .passwordInput, .websiteInput").on("input", function() {
+            const username = $(this).closest("tr").find(".usernameInput").val();
+            const password = $(this).closest("tr").find(".passwordInput").val();
+            const website = $(this).closest("tr").find(".websiteInput").val();
+
+            // Update the content of the current row using val() instead of text()
+            $(this).closest("tr").find("td:eq(0)").val(username);
+            $(this).closest("tr").find("td:eq(1)").val(password);
+            $(this).closest("tr").find("td:eq(2)").val(website);
+        });
+    }
+    function logout() {
+        // Clear the stored user data in localStorage and redirect to the login page
+        localStorage.removeItem('userData');
+        // Redirect to the login page or perform other necessary actions
+        // For now, let's reload the page to simulate a logout
+        location.reload();
     }
 
     $("form").submit(function(event) {
