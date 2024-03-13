@@ -3,12 +3,52 @@
 $(document).ready(function() {
     function loadMainContent() {
         $(".container").html(`
-            <div>
-                <h2>Welcome to PassShield Main Page</h2>
-                <!-- Add your main content and functionality here -->
-            </div>
+        <div>
+        <h2>{Password Manager}</h2>
+        <button id="addRowBtn">Add Row</button>
+        <table border="1" id="mainTable">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Website</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be added dynamically here -->
+            </tbody>
+        </table>
+    </div>
+
         `);
+    $("#addRowBtn").on("click", addRowToTable);
     }
+    function addRowToTable() {
+        // Get the table body
+        const tableBody = $("#mainTable tbody");
+
+        // Create a new row with three cells
+        const newRow = $("<tr>");
+        newRow.append("<td>New Data 1</td>");
+        newRow.append("<td>New Data 2</td>");
+        newRow.append("<td>New Data 3</td>");
+
+        // Append the new row to the table body
+        tableBody.append(newRow);
+    }
+
+    $("form").submit(function(event) {
+        // ... (your existing form submission logic remains unchanged) ...
+    });
+
+    $(".button-container button").on("click", function() {
+        // ... (your existing button click logic remains unchanged) ...
+    });
+
+    $("#confirm-password").on("input", function() {
+        // ... (your existing password confirmation logic remains unchanged) ...
+    });
+
 
     $("form").submit(function(event) {
         event.preventDefault();
@@ -23,6 +63,7 @@ $(document).ready(function() {
             if (storedUser && storedUser.username === username && storedUser.password === password) {
                 console.log('Login successful');
                 loadMainContent();
+                
                 
             } else {
                 console.log('Login failed');
@@ -45,6 +86,7 @@ $(document).ready(function() {
                 // Handle password confirmation failure
             }
         }
+
     });
 
     $(".button-container button").on("click", function() {
