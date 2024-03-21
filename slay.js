@@ -7,7 +7,7 @@ $(document).ready(function() {
             <div class="container">
                 <div>
                     <h2>Password Manager</h2>
-                    <button id="addRowBtn">Add Row</button>
+                    <button id="addRowBtn">Add New Password</button>
                     <table border="1" id="mainTable">
                         <thead>
                             <tr>
