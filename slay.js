@@ -2,64 +2,76 @@ $(document).ready(function() {
     function loadMainContent() {
         const mainContent = `
         <head>
-        <link rel="stylesheet" href="loginstyle.css">
+        <link rel="stylesheet" href="loginstyle.css"> 
+        <h1>PassShield</h1> 
         </head>
-            <div class="container">
-                <div>
-                    <h2>Password Manager</h2>
-                    <button id="addRowBtn">Add New Password</button>
-                    <table border="1" id="mainTable">
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Password</th>
-                                <th>Website</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Rows will be added dynamically here -->
-                        </tbody>
-                    </table>
-                    <button id="logoutBtn">Log Out</button>
-                    <hr>
-                    <h3>Generate Password</h3>
-                    <div>
-                        <label for="passwordLength">Length:</label>
-                        <input type="number" id="passwordLength" value="12" min="4" max="32">
-                    </div>
-                    <div>
-                        <input type="checkbox" id="includeLowercase" checked>
-                        <label for="includeLowercase">Include Lowercase</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="includeUppercase" checked>
-                        <label for="includeUppercase">Include Uppercase</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="includeNumbers" checked>
-                        <label for="includeNumbers">Include Numbers</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="includeSymbols" checked>
-                        <label for="includeSymbols">Include Symbols</label>
-                    </div>
-                    <button id="generatePasswordBtn">Generate Password</button>
-                    <input type="text" id="generatedPassword" readonly>
-                </div>
+        <div class="container">
+        <body>
+        <style>
+            body {
+              background-image: url('background3.jpg');
+              background-repeat: no-repeat;
+            }
+            </style>
+            </body>
+        <div class="password-generator">
+            <h3>Generate Password</h3>
+            <div>
+                <label for="passwordLength">Length:</label>
+                <input type="number" id="passwordLength" value="12" min="4" max="32">
             </div>
+            <div>
+                <input type="checkbox" id="includeLowercase" checked>
+                <label for="includeLowercase">Include Lowercase</label>
+            </div>
+            <div>
+                <input type="checkbox" id="includeUppercase" checked>
+                <label for="includeUppercase">Include Uppercase</label>
+            </div>
+            <div>
+                <input type="checkbox" id="includeNumbers" checked>
+                <label for="includeNumbers">Include Numbers</label>
+            </div>
+            <div>
+                <input type="checkbox" id="includeSymbols" checked>
+                <label for="includeSymbols">Include Symbols</label>
+            </div>
+            <button id="generatePasswordBtn">Generate Password</button>
+            <input type="text" id="generatedPassword" readonly>
+        </div>
+        <div class="table-container">
+            <button id="addRowBtn">Add New Password</button>
+            <table id="mainTable">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Website</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be added dynamically here -->
+                </tbody>
+            </table>
+            <button id="logoutBtn">Log Out</button>
+            <button id="deleteaccBtn">Delete User</button>
+        </div>
+    </div>
         `;
         $("body").html(mainContent);
         const cssLink = $("<link rel='stylesheet' type='text/css' href='loginstyle.css'>");
         $("head").append(cssLink);
         $("#addRowBtn").on("click", addRowToTable);
         $("#logoutBtn").on("click", logout);
+        $("#deleteaccBtn").on("click", deleteAccount);
+    
     }
 
     function addRowToTable() {
         const tableBody = $("#mainTable tbody");
         const newRow = $("<tr>");
         newRow.append(`<td><input type="text" class="usernameInput" placeholder="Enter Username"></td>`);
-        newRow.append(`<td><input type="password" class="passwordInput" placeholder="Enter Password"></td>`);
+        newRow.append(`<td><input type="password" class="passwordInput" placeholder="Enter Password"><button class="togglePassword">Show</button></td>`);
         newRow.append(`<td><input type="text" class="websiteInput" placeholder="Enter Website"></td>`);
         tableBody.append(newRow);
         $(".usernameInput, .passwordInput, .websiteInput").on("input", function() {
@@ -70,6 +82,13 @@ $(document).ready(function() {
             $(this).closest("tr").find("td:eq(1)").val(password);
             $(this).closest("tr").find("td:eq(2)").val(website);
         });
+        newRow.find(".togglePassword").click(function() {
+            const passwordInput = $(this).prev(".passwordInput");
+            const type = passwordInput.attr("type") === "password" ? "text" : "password";
+            passwordInput.attr("type", type);
+            $(this).text(type === "password" ? "Show" : "Hide");
+        });    
+    
     }
 
     function logout() {
@@ -78,6 +97,7 @@ $(document).ready(function() {
 
     function deleteAccount() {
         localStorage.removeItem('userData');
+        location.reload();
     }
 
     function generatePassword(length, lower, upper, number, symbol) {
@@ -101,7 +121,6 @@ $(document).ready(function() {
         return generatedPassword;
     }
 
-    // Delegate event handling to the document level
     $(document).on("click", "#generatePasswordBtn", function() {
         const length = +$("#passwordLength").val();
         const hasLower = $("#includeLowercase").is(":checked");
@@ -162,5 +181,14 @@ $(document).ready(function() {
             errorContainer.text("");
         }
     });
+    // Inside your document ready function or wherever you're initializing your JavaScript
+    $(".togglePassword").click(function() {
+        const passwordInput = $(this).prev(".passwordInput");
+        const type = passwordInput.attr("type") === "password" ? "text" : "password";
+        passwordInput.attr("type", type);
+    $(this).text(type === "password" ? "Show" : "Hide");
+    });
+
+    
     
 });

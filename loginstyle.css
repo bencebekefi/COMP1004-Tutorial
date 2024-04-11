@@ -1,4 +1,15 @@
-body {
+ 
+    h1 {
+        text-align: left;
+        margin-bottom: 20px;
+        margin-top: 0;
+        position: absolute; 
+        top: 20px; 
+        left: 20px; 
+    }
+    
+    
+    body {
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     margin: 0;
@@ -23,29 +34,7 @@ body {
         margin: 0 auto;
         padding: 20px;
     }
-    
-    /* Header Styles */
-    h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    
-    /* Button Styles */
-    button {
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    
-    button:hover {
-        background-color: #45a049;
-    }
-    
-    /* Table Styles */
+
     table {
         width: 100%;
         border-collapse: collapse;
@@ -89,7 +78,6 @@ body {
         margin-top: 5px;
     }
     
-    /* Additional Styles */
     .button-container {
         display: flex;
         justify-content: space-between;
@@ -128,8 +116,7 @@ body {
     width: 100%;
 }
 
-.login-container,
-.registration-container {
+.login-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -138,8 +125,13 @@ body {
     width: 100%;
 }
 
-h2 {
-    text-align: center;
+.registration-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
 }
 
 .form-group,
@@ -172,21 +164,21 @@ input {
 }
 
 .button-container button {
-    background-color: #4caf50;
+    background-color: #a1a1a1;
     color: #fff;
 }
 
 .button-container button:hover {
-    background-color: #45a049;
+    background-color:#a1a1a1;
 }
 
 .registration-button-container button {
-    background-color: #3498db;
+    background-color: #a1a1a1;
     color: #fff;
 }
 
 .registration-button-container button:hover {
-    background-color: #2980b9;
+    background-color:  #a1a1a1;
 }
 
 .error-message {
@@ -228,4 +220,107 @@ input {
 
 .password-manager-form button:hover {
     background-color: #45a049;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.password-generator {
+    width: 250px;
+}
+
+.table-container {
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+
+#mainTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#mainTable th, #mainTable td {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+#mainTable th {
+    background-color: #f2f2f2;
+}
+
+#mainTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#mainTable tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+#addRowBtn {
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+
+#logoutBtn {
+    background-color: #f44336; 
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+
+    text-align: right;
+    margin-bottom: 20px;
+    margin-top: 0;
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+
+}
+
+#deleteaccBtn {
+    background-color: #f44336; 
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+
+    text-align: right;
+    margin-bottom: 20;
+    margin-top: 0;
+    position: absolute; 
+    top: 60px; 
+    right: 20px; 
+}
+
+
+#addRowBtn:hover, #logoutBtn:hover {
+    opacity: 0.8;
 }
