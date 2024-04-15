@@ -1,16 +1,22 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs');
+const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(bodyParser.json());
-app.use(express.static('public'));
+// Middleware to parse JSON requests
+app.use(express.json());
 
-// Define users array
+// Array to store registered users (for demonstration purposes)
 let users = [];
+
+// Middleware to serve static files (HTML, CSS, JS)
+app.use(express.static(__dirname));
+
+// Endpoint for serving login.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
 
 // Endpoint for user login
 app.post('/login', (req, res) => {
@@ -26,48 +32,29 @@ app.post('/login', (req, res) => {
     }
 });
 
+
 // Endpoint for user registration
 app.post('/register', (req, res) => {
     const { username, password } = req.body;
+    // Check if username and password are provided
     if (username && password) {
-        users.push({ username, password }); // Add new user to the array
+        // Add new user to the users array
+        users.push({ username, password });
+        console.log("New user registered:", username); // Log the registered username
         res.status(200).json({ message: 'Registration successful' });
     } else {
+        console.error("Registration failed: Missing username or password"); // Log registration failure
         res.status(400).json({ error: 'Registration failed' });
     }
 });
 
-// Endpoint for account deletion
+// Endpoint to delete user account
 app.delete('/deleteAccount', (req, res) => {
-    const username = req.query.username;
-    console.log('DELETE request received for username:', username);
-    if (!users) {
-        res.status(500).json({ message: 'Users array is not defined' });
-        return;
-    }
-    const initialLength = users.length;
-    users = users.filter(user => user.username !== username);
-    if (initialLength === users.length) {
-        res.status(404).json({ message: 'User not found' });
-    } else {
-        res.status(200).json({ message: 'Account deleted successfully' });
-    }
-});
-
-// Endpoint to save table data
-app.post('/saveData', (req, res) => {
-    console.log('Received POST request to /saveData:', req.body);
-    const { username, password, website } = req.body;
-    // Your existing validation and saving logic here
-    
-
-    // Here you can handle the received data, for example, save it to a database
-    console.log('Received data to save:', req.body);
-    // Respond with a success message
-    res.status(200).json({ message: 'Data saved successfully' });
+    const { username } = req.body;
+    // Implement account deletion logic here
 });
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

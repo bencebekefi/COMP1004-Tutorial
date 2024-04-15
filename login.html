@@ -8,25 +8,28 @@
     <link rel="stylesheet" type="text/css" href="loginstyle.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="slay.js"></script>
+    
+   
+</head>
+<h1>PassShield</h1> 
+<body>
     <style>
         body {
           background-image: url('background3.jpg');
         }
-    </style>
-</head>
-<body>
-    <h1>PassShield</h1>
+        </style>
+    <script src="slay.js"> </script>
     <div class="container">
         <div class="login-container">
             <h2>Login</h2>
-            <form id="loginForm" action="#login" method="post">
+            <form action="#login" method="post">
                 <div class="form-group">
-                    <label for="loginUsername">Username:</label>
-                    <input type="text" id="loginUsername" name="username" required>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
                 </div>
                 <div class="form-group">
-                    <label for="loginPassword">Password:</label>
-                    <input type="password" id="loginPassword" name="password" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
                 </div>
                 <div class="button-container">
                     <button type="submit">Login</button>
@@ -36,18 +39,18 @@
         </div>
         <div class="registration-container" style="display: none;">
             <h2>Registration</h2>
-            <form id="registerForm" action="#register" method="post">
+            <form action="#register" method="post">
                 <div class="registration-form-group">
-                    <label for="registerUsername">Username:</label>
-                    <input type="text" id="registerUsername" name="username" required>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
                 </div>
                 <div class="registration-form-group">
-                    <label for="registerPassword">Password:</label>
-                    <input type="password" id="registerPassword" name="password" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
                 </div>
                 <div class="registration-form-group">
-                    <label for="confirmPassword">Confirm Password:</label>
-                    <input type="password" id="confirmPassword" name="confirm-password" required>
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
                     <div class="error-message"></div>
                 </div>
                 <div class="registration-button-container">
@@ -55,6 +58,8 @@
                 </div>
             </form>
         </div>
+        
+        
     </div>
 </body>
 </html>
