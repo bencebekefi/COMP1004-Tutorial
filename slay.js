@@ -55,6 +55,7 @@ $(document).ready(function() {
             </table>
             <button id="logoutBtn">Log Out</button>
             <button id="deleteaccBtn">Delete User</button>
+            
         </div>
     </div>
         `;
@@ -70,10 +71,11 @@ $(document).ready(function() {
     function addRowToTable() {
         const tableBody = $("#mainTable tbody");
         const newRow = $("<tr>");
-        newRow.append(`<td><input type="text" class="usernameInput" placeholder="Enter Username"></td>`);
-        newRow.append(`<td><input type="password" class="passwordInput" placeholder="Enter Password"><button class="togglePassword">Show</button></td>`);
-        newRow.append(`<td><input type="text" class="websiteInput" placeholder="Enter Website"></td>`);
+        newRow.append(`<td><input type="text" class="usernameInput" placeholder="Enter Username"><button class="SaveInTableButton">Save</button></td>`);
+        newRow.append(`<td><input type="password" class="passwordInput" placeholder="Enter Password"><button class="togglePassword">Show</button><button class="SaveInTableButton">Save</button></td>`);
+        newRow.append(`<td><input type="text" class="websiteInput" placeholder="Enter Website"><button class="SaveInTableButton">Save</button></td>`);
         tableBody.append(newRow);
+
         $(".usernameInput, .passwordInput, .websiteInput").on("input", function() {
             const username = $(this).closest("tr").find(".usernameInput").val();
             const password = $(this).closest("tr").find(".passwordInput").val();
@@ -82,13 +84,45 @@ $(document).ready(function() {
             $(this).closest("tr").find("td:eq(1)").val(password);
             $(this).closest("tr").find("td:eq(2)").val(website);
         });
+
         newRow.find(".togglePassword").click(function() {
             const passwordInput = $(this).prev(".passwordInput");
             const type = passwordInput.attr("type") === "password" ? "text" : "password";
             passwordInput.attr("type", type);
             $(this).text(type === "password" ? "Show" : "Hide");
         });    
-    
+
+        newRow.find(".SaveInTableButton").click(function() {
+            saveRowData($(this).closest("tr"));
+        });
+    }
+
+    function saveRowData(newRow) {
+        const username = newRow.find(".usernameInput").val();
+        const password = newRow.find(".passwordInput").val();
+        const website = newRow.find(".websiteInput").val();
+
+        const rowData = {
+            "username": username,
+            "password": password,
+            "website": website
+        };
+
+        // Send data to the server
+        $.ajax({
+            type: "POST",
+            url: "/saveData", // Replace with your server's endpoint to save data
+            contentType: "application/json",
+            data: JSON.stringify(rowData),
+            success: function(response) {
+                console.log("Data saved successfully");
+                // You can handle success response as needed
+            },
+            error: function(xhr, status, error) {
+                console.error("Error saving data:", error);
+                // Display error message to user or handle as needed
+            }
+        });
     }
 
     function logout() {
@@ -96,8 +130,21 @@ $(document).ready(function() {
     }
 
     function deleteAccount() {
-        localStorage.removeItem('userData');
-        location.reload();
+        const username = prompt("Please enter your username:");
+        if (!username) {
+            return;
+        }
+        $.ajax({
+            type: "DELETE",
+            url: `/deleteAccount?username=${username}`,
+            success: function(response) {
+                window.location.href = "/login.html";
+            },
+            error: function(xhr, status, error) {
+                console.error("Account deletion failed:", xhr.responseText);
+                alert("Account deletion failed. Please try again later.");
+            }
+        });
     }
 
     function generatePassword(length, lower, upper, number, symbol) {
@@ -123,41 +170,41 @@ $(document).ready(function() {
 
     $(document).on("click", "#generatePasswordBtn", function() {
         const length = +$("#passwordLength").val();
-        const hasLower = $("#includeLowercase").is(":checked");
-        const hasUpper = $("#includeUppercase").is(":checked");
-        const hasNumber = $("#includeNumbers").is(":checked");
-        const hasSymbol = $("#includeSymbols").is(":checked");
+        const lower = $("#includeLowercase").is(":checked");
+        const upper = $("#includeUppercase").is(":checked");
+        const number = $("#includeNumbers").is(":checked");
+        const symbol = $("#includeSymbols").is(":checked");
 
-        const password = generatePassword(length, hasLower, hasUpper, hasNumber, hasSymbol);
+        const password = generatePassword(length, lower, upper, number, symbol);
         $("#generatedPassword").val(password);
     });
-    $("form").submit(function(event) {
+
+    $(document).on("click", "#generatePasswordBtn", function() {
+        const length = +$("#passwordLength").val();
+        $("#generatedPassword").val(password);
+    });
+
+    // Function to send login credentials to server for authentication
+    $("form[action='#login']").submit(function(event) {
         event.preventDefault();
         const form = $(this);
         const username = form.find('input[name="username"]').val();
         const password = form.find('input[name="password"]').val();
-        if (form.attr("action") === "#login") {
-            const storedUser = JSON.parse(localStorage.getItem('userData'));
-            if (storedUser && storedUser.username === username && storedUser.password === password) {
-                console.log('Login successful');
-                loadMainContent();
-            } else {
-                console.log('Login failed');
+
+        $.ajax({
+            type: "POST",
+            url: "/login", // Replace with your server's login endpoint
+            contentType: "application/json",
+            data: JSON.stringify({ username: username, password: password }),
+            success: function(response) {
+                console.log("Login successful");
+                loadMainContent(); // Load main content upon successful login
+            },
+            error: function(xhr, status, error) {
+                console.error("Login failed:", error);
+                // Display error message to user or handle as needed
             }
-        } else if (form.attr("action") === "#register") {
-            const confirmPassword = form.find('input[name="confirm-password"]').val();
-            if (password === confirmPassword) {
-                const userData = {
-                    username: username,
-                    password: password
-                };
-                localStorage.setItem('userData', JSON.stringify(userData));
-                console.log('Registration successful');
-                loadMainContent();
-            } else {
-                console.log('Password confirmation failed');
-            }
-        }
+        });
     });
 
     $(".button-container button").on("click", function() {
@@ -170,25 +217,39 @@ $(document).ready(function() {
             $(".login-container").show();
         }
     });
+    // Function to send registration data to server for processing
+    $("form[action='#register']").submit(function(event) {
+        event.preventDefault();
+        const form = $(this);
+        const username = form.find('input[name="username"]').val();
+        const password = form.find('input[name="password"]').val();
+        const confirmPassword = form.find('input[name="confirm-password"]').val();
 
-    $("#confirm-password").on("input", function() {
-        const password = $(this).closest("form").find("#password").val();
-        const confirmPassword = $(this).val();
-        const errorContainer = $(this).closest("form").find(".error-message");
+        const errorContainer = form.find('.error-message');
+
         if (password !== confirmPassword) {
+            // Show error message if passwords do not match
             errorContainer.text("Passwords do not match");
+            return; // Exit the function early
         } else {
+            // Clear any existing error message
             errorContainer.text("");
         }
-    });
-    // Inside your document ready function or wherever you're initializing your JavaScript
-    $(".togglePassword").click(function() {
-        const passwordInput = $(this).prev(".passwordInput");
-        const type = passwordInput.attr("type") === "password" ? "text" : "password";
-        passwordInput.attr("type", type);
-    $(this).text(type === "password" ? "Show" : "Hide");
+
+        $.ajax({
+            type: "POST",
+            url: "/register", // Replace with your server's registration endpoint
+            contentType: "application/json",
+            data: JSON.stringify({ username: username, password: password }),
+            success: function(response) {
+                console.log("Registration successful");
+                loadMainContent(); // Load main content upon successful registration
+            },
+            error: function(xhr, status, error) {
+                console.error("Registration failed:", error);
+                // Display error message to user or handle as needed
+            }
+        });
     });
 
-    
-    
 });

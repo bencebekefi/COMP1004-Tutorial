@@ -249,16 +249,16 @@ input {
     border: 1px solid #ccc;
 }
 
-#mainTable th {
+#mainTable th tr:hover {
     background-color: #f2f2f2;
 }
 
-#mainTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+#mainTable tbody tr:hover {
+    background-color: #f2f2f2;
 }
 
 #mainTable tbody tr:hover {
-    background-color: #e0e0e0;
+    background-color: #f2f2f2;
 }
 
 #addRowBtn {
