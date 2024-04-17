@@ -22,15 +22,24 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
     console.log('Received POST request to /login:', req.body);
     const { username, password } = req.body;
+
+    // Check if username and password are provided
+    if (!username || !password) {
+        console.log('Login failed: Missing username or password');
+        return res.status(400).json({ error: 'Missing username or password' });
+    }
+
+    // Find the user in the users array
     const user = users.find(user => user.username === username && user.password === password);
     if (user) {
         console.log('Login successful for user:', username);
-        res.status(200).json({ message: 'Login successful' });
+        return res.status(200).json({ message: 'Login successful' });
     } else {
         console.log('Login failed for user:', username);
-        res.status(401).json({ error: 'Login failed' });
+        return res.status(401).json({ error: 'Login failed' });
     }
 });
+
 
 
 // Endpoint for user registration
