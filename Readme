@@ -6,24 +6,24 @@ PassShield is a password management website project developed by Bence Bekefi fo
 
 ## Features
 
-- Securely store and manage passwords
-- Password generation with customizable options
-- User authentication and registration
-- Responsive UI design for intuitive user experience
+* Securely store and manage passwords
+* Password generation with customizable options
+* User authentication and registration
+* Responsive UI design for intuitive user experience
 
 ## Issues and Constraints
 
-- Inability to save passwords and usernames
-- Limited functionality of the logout button
-- Issues with the delete user functionality
-- Cross-browser compatibility concerns
+* Inability to save passwords and usernames
+* Limited functionality of the logout button
+* Issues with the delete user functionality
+* Cross-browser compatibility concerns
 
 ## Future Enhancements
 
-- Implementing multi-factor authentication
-- Password strength analysis capabilities
-- Secure password sharing functionality
-- Advanced password management tools
+* Implementing multi-factor authentication
+* Password strength analysis capabilities
+* Secure password sharing functionality
+* Advanced password management tools
 
 
 ## Installation
