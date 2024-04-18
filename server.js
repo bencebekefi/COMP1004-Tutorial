@@ -59,8 +59,8 @@ app.post('/register', (req, res) => {
 
 // Endpoint to delete user account
 app.delete('/deleteAccount', (req, res) => {
-    const { username } = req.body;
-    // Implement account deletion logic here
+    const { username, password } = req.body;
+    
 });
 
 // Start the server

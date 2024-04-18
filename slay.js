@@ -104,7 +104,7 @@ $(document).ready(function() {
             // Send data to the server
             $.ajax({
                 type: "POST",
-                url: "/saveData", // Replace with your server's endpoint to save data
+                url: "/saveData", 
                 contentType: "application/json",
                 data: JSON.stringify(rowData),
                 success: function(response) {
@@ -130,10 +130,10 @@ $(document).ready(function() {
             // If the user cancels or leaves the input empty, do nothing
             return;
         }
-        // Assuming your server expects a DELETE request for account deletion
+        
         $.ajax({
             type: "DELETE",
-            url: "/deleteAccount", // Replace with your server's delete account endpoint
+            url: "/deleteAccount", 
             contentType: "application/json",
             data: JSON.stringify({ username: username }), // Pass the entered username in the request body
             success: function(response) {
@@ -142,7 +142,7 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.error("Account deletion failed:", error);
-                // Display error message to user or handle as needed
+                // Display error message 
             }
         });
     }
@@ -194,7 +194,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "/login", // Replace with your server's login endpoint
+            url: "/login", 
             contentType: "application/json",
             data: JSON.stringify({ username: username, password: password }),
             success: function(response) {
@@ -203,7 +203,7 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.error("Login failed:", error);
-                // Display error message to user or handle as needed
+                // Display error message 
             }
         });
     });
@@ -253,5 +253,5 @@ $(document).ready(function() {
         });
     });
 
-    // Other functions and event handlers...
+    
 });
