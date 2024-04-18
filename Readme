@@ -1,27 +1,6 @@
 # PassShield
 
-PassShield is a password management website project developed by Bence Bekefi for COMP 1004 Portfolio. The goal of PassShield is to securely store and manage passwords, offering users a simple solution for storing online credentials.
-
-## Built With
-
-- HTML
-- CSS
-- JavaScript
-- Node.js
-- Express.js
-- npm packages for dependency management
-
-## Development Process
-
-The project follows the Agile software development lifecycle, with sprints focusing on:
-
-- Project initiation
-- Requirements gathering
-- Designing
-- Frontend and backend development
-- UI/UX improvement
-- Testing
-- Bug fixes
+PassShield is a password management website project developed by Bence Bekefi for COMP 1004 Portfolio. The goal of PassShield is to securely store and manage passwords, offering users a simple solution for storing online credentials. It includes features like secure server-based authentication, password generation, and organization to enhance user security and convenience. PassShield is built using HTML, CSS, JavaScript, Node.js, Express.js, and npm packages for dependency management. The project follows the Agile software development lifecycle, with sprints focusing on project initiation, requirements gathering, designing, frontend and backend development, UI/UX improvement, testing, and bug fixes. PassShield aims to evolve into a comprehensive platform for managing various sensitive information securely. Despite facing challenges and constraints, the project remains dedicated to continuous improvement and meeting user needs.
 
 ## Features
 
@@ -43,4 +22,3 @@ The project follows the Agile software development lifecycle, with sprints focus
 - Password strength analysis capabilities
 - Secure password sharing functionality
 - Advanced password management tools
-
